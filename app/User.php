@@ -27,13 +27,6 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
     
-    public function feed_microposts()
-    {
-        $follow_user_ids = $this->followings()->pluck('users.id')->toArray();
-        $follow_user_ids[] = $this->id;
-        return Micropost::whereIn('user_id', $follow_user_ids);
-    }
-    
     public function microposts()
     {
         return $this->hasMany(Micropost::class);
@@ -88,4 +81,10 @@ class User extends Authenticatable
         return $this->followings()->where('follow_id', $userId)->exists();
     }
     
+    public function feed_microposts()
+    {
+        $follow_user_ids = $this->followings()->pluck('users.id')->toArray();
+        $follow_user_ids[] = $this->id;
+        return Micropost::whereIn('user_id', $follow_user_ids);
+    }
 }
