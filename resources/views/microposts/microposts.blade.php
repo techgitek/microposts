@@ -9,10 +9,12 @@
                 <div>
                     <p class="mb-0">{!! nl2br(e($micropost->content)) !!}</p>
                 </div>
-                <div>
+                <div class="btn-group" role="group"> <!-- 横並びにしたいので追記 -->
+                    @include('favorite.favorite', ['microposts' => $microposts])
+                    
                     @if (Auth::id() == $micropost->user_id)
                         {!! Form::open(['route' => ['microposts.destroy', $micropost->id], 'method' => 'delete']) !!}
-                            {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}
+                            {!! Form::submit('delete', ['class' => 'btn btn-success btn-sm']) !!}
                         {!! Form::close() !!}
                     @endif
                 </div>
